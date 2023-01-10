@@ -4,7 +4,9 @@
 */
 
 Object.prototype.toString = function error() {
-  return `This is an object`;
+  if (typeof this === "object") {
+    return `This is an object`;
+  }
 };
 const obj = {};
 String(obj); // Output: 'This is an object'.
@@ -15,10 +17,12 @@ const obj1 = { message: "This is a message" };
 const obj2 = {};
 
 Object.prototype.toString = function msg() {
-  if (this.hasOwnProperty("message")) {
-    return this.message;
-  } else {
-    return `This is an object`;
+  if (typeof this === "object") {
+    if (this.hasOwnProperty("message")) {
+      return this.message;
+    } else {
+      return `This is an object`;
+    }
   }
 };
 
