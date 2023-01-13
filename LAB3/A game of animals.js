@@ -4,7 +4,7 @@
   eat and attack. They also have color and weight properties.
   The game also has birds which do all these actions in addition to flying.
   Represent this data using OOP. 
-  
+
   Notes:
   - Write the code twice; using ES5 function constructors and using ES6 classes.
   - Leave the implementation of the 'walk', 'run', 'eat' and 'attack' methods empty
