@@ -20,8 +20,8 @@ body {
   flex-grow: 1;
   flex-wrap: wrap;
   position: fixed;
-  top: 3rem;
-  left: 2rem;
+  top: 6rem;
+  left: 5rem;
 }
 
 .dash-board {
@@ -37,18 +37,21 @@ div.info {
 }
 
 #instruction {
-  margin-left: 3vw;
+  margin-left: 15em;
+  margin-top: 11em;
   color: white;
   text-align: center;
 }
 
 #score-board {
   color: white;
+  margin-top: 11em;
 }
 
 #counter {
   margin-right: 3vw;
   color: white;
+  margin-top: 11em;
 }
 
 #result {
@@ -114,4 +117,15 @@ label.for-timer {
 .y span {
   padding-left: 1.4rem;
   font-size: 250%;
+}
+#imgContainer {
+  position: relative;
+  display: flex;
+  top: 35em;
+  left: 40rem;
+}
+#imgContainer img {
+  /* position: absolute; */
+  height: 4rem;
+  width: 4rem;
 }

@@ -21,29 +21,28 @@
   - Create a mixed mode, where the game suggests for the user the square he/she should click
   on, and also the current direction of the board (white or black).
 */
-debugger;
+
 var avalibleLetters = ["a", "b", "c", "d", "e", "f", "g", "h"];
 var avalibleNumbers = [1, 2, 3, 4, 5, 6, 7, 8];
-
+var instructions = [];
 var i;
 var l;
-
+var newDiv;
+var orders;
 function drawBoard() {
   const divContainer = document.getElementById("board-holder");
   for (i = 1; i <= 8; i++) {
     avalibleLetters.forEach((element) => {
       l = element;
-      let newDiv = document.createElement("div");
+      newDiv = document.createElement("div");
       newDiv.style.width = "15px";
       newDiv.style.height = "15px";
       newDiv.style.padding = "15px";
       newDiv.style.borderRadius = "1px";
-      // newDiv.addEventListener("click", () => {
-      //   alert("3aa");
-      // });
-      // newDiv.onclick = alert("aa");
       newDiv.id = `${l}${i}`;
-
+      newDiv.addEventListener("click", (event) => {
+        checkInput(event.target.id);
+      });
       if (
         i % 2 == 0 &&
         (l == avalibleLetters[0] ||
@@ -67,40 +66,87 @@ function drawBoard() {
     });
   }
 }
-
-const counter = document.getElementById("counter");
+function drawXY() {
+  //draw xy
+}
 function startTimer() {
-  //timer
-  printXYrandom();
+  const counter = document.getElementById("counter");
+  var x = setInterval(() => {
+    // edit in timer element
+    currentTime = Number(`${counter.innerHTML}`.split(":")[1]);
+    Nexttime = currentTime + 1;
+    counter.innerHTML = `00:${String(Nexttime)}`;
+    if (Nexttime == 30) {
+      clearInterval(x);
+    }
+  }, 1000);
 }
-//2 recurision functions
-function printXYrandom() {
-  //print
+function showInstructions() {
+  //give the player a random div to click
+  let instructionView = document.getElementById("instruction");
+  const randomX =
+    avalibleLetters[Math.floor(Math.random() * avalibleLetters.length)];
+  const randomY =
+    avalibleNumbers[Math.floor(Math.random() * avalibleNumbers.length)];
+  instructions.push(randomX);
+  instructions.push(randomY);
+  instructions = instructions.join("");
+  instructionView.innerHTML = `Click on : ${instructions}`;
+  console.log(instructions);
+  orders = instructions;
+  instructions = instructions.split("");
+  instructions.pop();
+  instructions.pop();
 }
-function check() {
-  //check
-  //this
-  // alert("3aaa");
+function checkInput(targetId) {
+  //validate input of the calller this matches the shown instructions
+  if (targetId == orders) {
+    //if it correct, add to score, show correct sign, show the next random x & y to instruct player
+    //add to score
+    let score = document.getElementById("score-board");
+    let currentScore = Number(`${score.innerHTML}`.split(":")[1]);
+    nextScore = currentScore + 1;
+    score.innerHTML = `score:${String(nextScore)}`;
+    // show correct sign
+    const parent = document.getElementById("imgContainer");
+    const img = document.createElement("img");
+    img.src = "./../img/tick.jpg";
+    img.style.padding = "15px";
+    parent.appendChild(img);
+    //show the next random x & y to instruct player
+    showInstructions();
+  } else {
+    //if it is not correct, show not correct sign, show the next random x & y to instruct player
+    const parent = document.getElementById("imgContainer");
+    const img = document.createElement("img");
+    img.src = "./../img/cross.jpg";
+    img.style.padding = "15px";
+    parent.appendChild(img);
+    showInstructions();
+  }
 }
-function showScore() {
-  //print
+function removeBoard() {
+  //remove board
 }
-drawBoard();
 function startGame() {
-  //show clickable board
-  drawBoard();
-  //start timer
-  startTimer();
-  //show random x & y to instruct player
-
-  //listen  to clicks on board
-  //once clicked check if it correct or not , hide random x & y to instruct player
-  //if it correct, add to score, show correct sign, show the next random x & y to instruct player
-  //if it is not correct, show not correct sign, show the next random x & y to instruct player
-  //when timer reaches 30 seconds stop accepting input
-  //show final score
+  inGameEvents();
+  setTimeout(() => {
+    endGame();
+  }, 31000);
 }
-document.getElementById("btn").addEventListener("click", alert("f"));
+function inGameEvents() {
+  drawBoard();
+  // drawXY();
+  startTimer();
+  showInstructions();
+  // checkInput(targetId) is a call back function which activated automaticly on click!
+}
+function endGame() {
+  alert("the game is ended");
+  // removeBoard();
+}
 
-// const div = document.getElementById("a1");
-// div.addEventListener("click", alert("dii"));
+startButton = document.getElementById("btn");
+startButton.addEventListener("click", () => {
+  startGame();
+});
