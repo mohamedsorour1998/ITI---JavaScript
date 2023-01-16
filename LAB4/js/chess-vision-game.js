@@ -21,14 +21,78 @@
   - Create a mixed mode, where the game suggests for the user the square he/she should click
   on, and also the current direction of the board (white or black).
 */
-const counter = document.getElementById("counter");
-const startbutton = document.getElementById("btn");
+debugger;
+var avalibleLetters = ["a", "b", "c", "d", "e", "f", "g", "h"];
+var avalibleNumbers = [1, 2, 3, 4, 5, 6, 7, 8];
 
+var i;
+var l;
+
+function drawBoard() {
+  const divContainer = document.getElementById("board-holder");
+  for (i = 1; i <= 8; i++) {
+    avalibleLetters.forEach((element) => {
+      l = element;
+      let newDiv = document.createElement("div");
+      newDiv.style.width = "15px";
+      newDiv.style.height = "15px";
+      newDiv.style.padding = "15px";
+      newDiv.style.borderRadius = "1px";
+      // newDiv.addEventListener("click", () => {
+      //   alert("3aa");
+      // });
+      // newDiv.onclick = alert("aa");
+      newDiv.id = `${l}${i}`;
+
+      if (
+        i % 2 == 0 &&
+        (l == avalibleLetters[0] ||
+          l == avalibleLetters[2] ||
+          l == avalibleLetters[4] ||
+          l == avalibleLetters[6])
+      ) {
+        newDiv.style.background = "#33FF44";
+      } else if (
+        i % 2 != 0 &&
+        (l == avalibleLetters[1] ||
+          l == avalibleLetters[3] ||
+          l == avalibleLetters[5] ||
+          l == avalibleLetters[7])
+      ) {
+        newDiv.style.background = "#33FF44";
+      } else {
+        newDiv.style.background = "#CCCCCC";
+      }
+      divContainer.appendChild(newDiv);
+    });
+  }
+}
+
+const counter = document.getElementById("counter");
+function startTimer() {
+  //timer
+  printXYrandom();
+}
+//2 recurision functions
+function printXYrandom() {
+  //print
+}
+function check() {
+  //check
+  //this
+  // alert("3aaa");
+}
+function showScore() {
+  //print
+}
+drawBoard();
 function startGame() {
   //show clickable board
-  //show x & y
+  drawBoard();
   //start timer
+  startTimer();
   //show random x & y to instruct player
+
   //listen  to clicks on board
   //once clicked check if it correct or not , hide random x & y to instruct player
   //if it correct, add to score, show correct sign, show the next random x & y to instruct player
@@ -36,5 +100,7 @@ function startGame() {
   //when timer reaches 30 seconds stop accepting input
   //show final score
 }
+document.getElementById("btn").addEventListener("click", alert("f"));
 
-startbutton.addEventListener("click", startGame());
+// const div = document.getElementById("a1");
+// div.addEventListener("click", alert("dii"));

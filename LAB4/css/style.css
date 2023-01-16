@@ -4,7 +4,7 @@
 }
 
 body {
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: #653838;
 }
 
 .main-div {
@@ -15,14 +15,18 @@ body {
 
 #board-holder {
   display: flex;
-  border: 15px solid #342c2c;
+  border: 8px solid #392c2c;
   width: 360px;
   flex-grow: 1;
+  flex-wrap: wrap;
+  position: fixed;
+  top: 3rem;
+  left: 2rem;
 }
 
 .dash-board {
   width: 50vw;
-  background-color: black;
+  background-color: rgb(50, 10, 10);
   flex-grow: 1;
   height: 80vh;
 }
@@ -49,7 +53,7 @@ div.info {
 
 #result {
   height: 250px;
-  border: 1px solid gray;
+  border: 1px solid rgb(174, 70, 70);
   display: flex;
   flex-wrap: wrap;
   margin-top: 30px;
@@ -90,4 +94,24 @@ label.for-timer {
 
 .btn:hover {
   cursor: pointer;
+}
+
+.XY {
+  display: flex;
+  position: relative;
+  top: 3rem;
+  left: 0.5rem;
+}
+.x {
+  display: flex;
+  flex-direction: column;
+  font-size: 250%;
+}
+.y {
+  position: relative;
+  top: -3rem;
+}
+.y span {
+  padding-left: 1.4rem;
+  font-size: 250%;
 }
