@@ -21,26 +21,59 @@
   - Create a mixed mode, where the game suggests for the user the square he/she should click
   on, and also the current direction of the board (white or black).
 */
+startButton = document.getElementById("btn");
+startButton.addEventListener("click", () => {
+  startGame();
+});
+toggleBlack = document.getElementById("black");
 
+function startGame() {
+  inGameEvents();
+  setTimeout(() => {
+    endGame();
+  }, 31000);
+}
+function inGameEvents() {
+  drawBoard();
+  drawXY();
+  startTimer();
+  showInstructions();
+  // checkInput(targetId) is a call back function which activated automaticly on click!
+}
+function endGame() {
+  alert("the game ended");
+  // removeBoard();
+  // restScore();
+  // restTimer();
+}
+
+//Global Vaiabels
 var avalibleLetters = ["a", "b", "c", "d", "e", "f", "g", "h"];
 var avalibleNumbers = [1, 2, 3, 4, 5, 6, 7, 8];
-var instructions = [];
+var orders;
 var i;
 var l;
-var newDiv;
-var orders;
+var globalDivId;
+var globalDiv;
+var divContainer = document.getElementById("board-holder");
+
+//functions implementations
 function drawBoard() {
-  const divContainer = document.getElementById("board-holder");
   for (i = 1; i <= 8; i++) {
     avalibleLetters.forEach((element) => {
       l = element;
-      newDiv = document.createElement("div");
+      let newDiv = document.createElement("div");
       newDiv.style.width = "15px";
       newDiv.style.height = "15px";
       newDiv.style.padding = "15px";
       newDiv.style.borderRadius = "1px";
       newDiv.id = `${l}${i}`;
+      globalDivId = newDiv.id;
+      globalDiv = newDiv;
+
       newDiv.addEventListener("click", (event) => {
+        //passing event.target.id as argument for the call back function, to be used in
+        //it to know which element had been called and it's id
         checkInput(event.target.id);
       });
       if (
@@ -67,22 +100,38 @@ function drawBoard() {
   }
 }
 function drawXY() {
-  //draw xy
+  //print x
+  divContainer.children[0].innerHTML = `${divContainer.children[0].id
+    .split("")
+    .reverse()
+    .join("")}`;
+  for (let i = 1; i < 8; i++) {
+    divContainer.children[i].innerHTML = `${
+      divContainer.children[i].id.split("")[0]
+    }`;
+  }
+  //print y
+  for (let j = 8; j < 64; j += 8) {
+    divContainer.children[j].innerHTML = `${
+      divContainer.children[j].id.split("")[1]
+    }`;
+  }
 }
 function startTimer() {
   const counter = document.getElementById("counter");
   var x = setInterval(() => {
     // edit in timer element
     currentTime = Number(`${counter.innerHTML}`.split(":")[1]);
-    Nexttime = currentTime + 1;
+    Nexttime = currentTime - 1;
     counter.innerHTML = `00:${String(Nexttime)}`;
-    if (Nexttime == 30) {
+    if (Nexttime == 0) {
       clearInterval(x);
     }
   }, 1000);
 }
 function showInstructions() {
   //give the player a random div to click
+  let instructions = [];
   let instructionView = document.getElementById("instruction");
   const randomX =
     avalibleLetters[Math.floor(Math.random() * avalibleLetters.length)];
@@ -92,7 +141,6 @@ function showInstructions() {
   instructions.push(randomY);
   instructions = instructions.join("");
   instructionView.innerHTML = `Click on : ${instructions}`;
-  console.log(instructions);
   orders = instructions;
   instructions = instructions.split("");
   instructions.pop();
@@ -122,31 +170,23 @@ function checkInput(targetId) {
     img.src = "./../img/cross.jpg";
     img.style.padding = "15px";
     parent.appendChild(img);
+    //show the next random x & y to instruct player
     showInstructions();
   }
 }
+function toggleWhiteBlack() {
+  //enable white/black
+  alert("iam black!");
+}
 function removeBoard() {
   //remove board
+  //my brodther farhood told me to remove event listner from each element
 }
-function startGame() {
-  inGameEvents();
-  setTimeout(() => {
-    endGame();
-  }, 31000);
+function restScore() {
+  //remove board
+  //my brodther farhood told me to remove event listner from each element
 }
-function inGameEvents() {
-  drawBoard();
-  // drawXY();
-  startTimer();
-  showInstructions();
-  // checkInput(targetId) is a call back function which activated automaticly on click!
+function restTimer() {
+  //remove board
+  //my brodther farhood told me to remove event listner from each element
 }
-function endGame() {
-  alert("the game is ended");
-  // removeBoard();
-}
-
-startButton = document.getElementById("btn");
-startButton.addEventListener("click", () => {
-  startGame();
-});
