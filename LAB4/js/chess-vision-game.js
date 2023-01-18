@@ -25,26 +25,36 @@ startButton = document.getElementById("btn");
 startButton.addEventListener("click", () => {
   startGame();
 });
-toggleBlack = document.getElementById("black");
+getSelectParent = document.getElementById("color");
 
 function startGame() {
-  inGameEvents();
+  if (false) {
+    inGameEventsWithWhiteBoard();
+  } else {
+    inGameEventsWithBlackBoard();
+  }
   setTimeout(() => {
     endGame();
   }, 31000);
 }
-function inGameEvents() {
-  drawBoard();
+function inGameEventsWithWhiteBoard() {
+  drawBoardWhite();
+  drawXY();
+  startTimer();
+  showInstructions();
+  // checkInput(targetId) is a call back function which activated automaticly on click!
+}
+function inGameEventsWithBlackBoard() {
+  drawBoardBlack();
   drawXY();
   startTimer();
   showInstructions();
   // checkInput(targetId) is a call back function which activated automaticly on click!
 }
 function endGame() {
-  alert("the game ended");
-  // removeBoard();
-  // restScore();
-  // restTimer();
+  removeBoard();
+  resetScore();
+  resetTimer();
 }
 
 //Global Vaiabels
@@ -58,7 +68,7 @@ var globalDiv;
 var divContainer = document.getElementById("board-holder");
 
 //functions implementations
-function drawBoard() {
+function drawBoardWhite() {
   for (i = 1; i <= 8; i++) {
     avalibleLetters.forEach((element) => {
       l = element;
@@ -94,6 +104,47 @@ function drawBoard() {
         newDiv.style.background = "#33FF44";
       } else {
         newDiv.style.background = "#CCCCCC";
+      }
+      divContainer.appendChild(newDiv);
+    });
+  }
+}
+function drawBoardBlack() {
+  for (i = 1; i <= 8; i++) {
+    avalibleLetters.forEach((element) => {
+      l = element;
+      let newDiv = document.createElement("div");
+      newDiv.style.width = "15px";
+      newDiv.style.height = "15px";
+      newDiv.style.padding = "15px";
+      newDiv.style.borderRadius = "1px";
+      newDiv.id = `${l}${i}`;
+      globalDivId = newDiv.id;
+      globalDiv = newDiv;
+
+      newDiv.addEventListener("click", (event) => {
+        //passing event.target.id as argument for the call back function, to be used in
+        //it to know which element had been called and it's id
+        checkInput(event.target.id);
+      });
+      if (
+        i % 2 == 0 &&
+        (l == avalibleLetters[0] ||
+          l == avalibleLetters[2] ||
+          l == avalibleLetters[4] ||
+          l == avalibleLetters[6])
+      ) {
+        newDiv.style.background = "#CCCCCC";
+      } else if (
+        i % 2 != 0 &&
+        (l == avalibleLetters[1] ||
+          l == avalibleLetters[3] ||
+          l == avalibleLetters[5] ||
+          l == avalibleLetters[7])
+      ) {
+        newDiv.style.background = "#CCCCCC";
+      } else {
+        newDiv.style.background = "#33FF44";
       }
       divContainer.appendChild(newDiv);
     });
@@ -175,18 +226,18 @@ function checkInput(targetId) {
   }
 }
 function toggleWhiteBlack() {
+  //startGame()
   //enable white/black
   alert("iam black!");
 }
 function removeBoard() {
-  //remove board
-  //my brodther farhood told me to remove event listner from each element
+  divContainer.replaceChildren();
 }
-function restScore() {
-  //remove board
-  //my brodther farhood told me to remove event listner from each element
+function resetScore() {
+  let score = document.getElementById("score-board");
+  score.innerHTML = `score:0`;
 }
-function restTimer() {
-  //remove board
-  //my brodther farhood told me to remove event listner from each element
+function resetTimer() {
+  const counter = document.getElementById("counter");
+  counter.innerHTML = `00:30`;
 }
