@@ -1,26 +1,3 @@
-/*
-  Create a chess vision game like the one in this link: https://www.chess.com/vision
-
-  Required Features:
-  - The user clicks on the 'start' button, after that, a timer of 30 seconds starts.
-  - During these 30 seconds, the game asks the user to click on a random square by telling
-  the coordinates of this square as domenstrated in the link.
-  - The user should click on the correct square.
-  - If the clicked square matches the wanted square, it's considered a correct answer, and
-  a green check mark is written next to it the the results section.
-  - If it's wrong, a red cross mark is written next to it.
-  - The score is always displayed and gets updated after every answer.
-  - After the 30 seconds elapse, the board should not accept any clicks. and the final score
-  is displayed.
-  - The style of the page can be different from that in the link.
-
-  Bonus Features:
-  - Create two modes for the game. One for white, where the bottom row is considered the "1" row
-  and the left column is considered the "a" column one for black where the bottom row is 
-  considered the "8" row and the left row is considered the "h" row.
-  - Create a mixed mode, where the game suggests for the user the square he/she should click
-  on, and also the current direction of the board (white or black).
-*/
 startButton = document.getElementById("btn");
 startButton.addEventListener("click", () => {
   startGame();
@@ -28,32 +5,23 @@ startButton.addEventListener("click", () => {
 getSelectParent = document.getElementById("color");
 
 function startGame() {
-  if (false) {
-    inGameEventsWithWhiteBoard();
-  } else {
-    inGameEventsWithBlackBoard();
-  }
+  inGameEvents();
   setTimeout(() => {
     endGame();
   }, 31000);
+  //hide start button after start
+  startButton.style.display = "none";
 }
-function inGameEventsWithWhiteBoard() {
-  drawBoardWhite();
+function inGameEvents() {
+  drawBoard();
   drawXY();
   startTimer();
   showInstructions();
   // checkInput(targetId) is a call back function which activated automaticly on click!
 }
-function inGameEventsWithBlackBoard() {
-  drawBoardBlack();
-  drawXY();
-  startTimer();
-  showInstructions();
-  // checkInput(targetId) is a call back function which activated automaticly on click!
-}
+
 function endGame() {
   removeBoard();
-  resetScore();
   resetTimer();
 }
 
@@ -63,12 +31,10 @@ var avalibleNumbers = [1, 2, 3, 4, 5, 6, 7, 8];
 var orders;
 var i;
 var l;
-var globalDivId;
-var globalDiv;
 var divContainer = document.getElementById("board-holder");
 
 //functions implementations
-function drawBoardWhite() {
+function drawBoard() {
   for (i = 1; i <= 8; i++) {
     avalibleLetters.forEach((element) => {
       l = element;
@@ -80,7 +46,6 @@ function drawBoardWhite() {
       newDiv.id = `${l}${i}`;
       globalDivId = newDiv.id;
       globalDiv = newDiv;
-
       newDiv.addEventListener("click", (event) => {
         //passing event.target.id as argument for the call back function, to be used in
         //it to know which element had been called and it's id
@@ -104,47 +69,6 @@ function drawBoardWhite() {
         newDiv.style.background = "#33FF44";
       } else {
         newDiv.style.background = "#CCCCCC";
-      }
-      divContainer.appendChild(newDiv);
-    });
-  }
-}
-function drawBoardBlack() {
-  for (i = 1; i <= 8; i++) {
-    avalibleLetters.forEach((element) => {
-      l = element;
-      let newDiv = document.createElement("div");
-      newDiv.style.width = "15px";
-      newDiv.style.height = "15px";
-      newDiv.style.padding = "15px";
-      newDiv.style.borderRadius = "1px";
-      newDiv.id = `${l}${i}`;
-      globalDivId = newDiv.id;
-      globalDiv = newDiv;
-
-      newDiv.addEventListener("click", (event) => {
-        //passing event.target.id as argument for the call back function, to be used in
-        //it to know which element had been called and it's id
-        checkInput(event.target.id);
-      });
-      if (
-        i % 2 == 0 &&
-        (l == avalibleLetters[0] ||
-          l == avalibleLetters[2] ||
-          l == avalibleLetters[4] ||
-          l == avalibleLetters[6])
-      ) {
-        newDiv.style.background = "#CCCCCC";
-      } else if (
-        i % 2 != 0 &&
-        (l == avalibleLetters[1] ||
-          l == avalibleLetters[3] ||
-          l == avalibleLetters[5] ||
-          l == avalibleLetters[7])
-      ) {
-        newDiv.style.background = "#CCCCCC";
-      } else {
-        newDiv.style.background = "#33FF44";
       }
       divContainer.appendChild(newDiv);
     });
@@ -225,17 +149,8 @@ function checkInput(targetId) {
     showInstructions();
   }
 }
-function toggleWhiteBlack() {
-  //startGame()
-  //enable white/black
-  alert("iam black!");
-}
 function removeBoard() {
   divContainer.replaceChildren();
-}
-function resetScore() {
-  let score = document.getElementById("score-board");
-  score.innerHTML = `score:0`;
 }
 function resetTimer() {
   const counter = document.getElementById("counter");
