@@ -2,7 +2,6 @@ startButton = document.getElementById("btn");
 startButton.addEventListener("click", () => {
   startGame();
 });
-getSelectParent = document.getElementById("color");
 
 function startGame() {
   inGameEvents();
@@ -44,8 +43,6 @@ function drawBoard() {
       newDiv.style.padding = "15px";
       newDiv.style.borderRadius = "1px";
       newDiv.id = `${l}${i}`;
-      globalDivId = newDiv.id;
-      globalDiv = newDiv;
       newDiv.addEventListener("click", (event) => {
         //passing event.target.id as argument for the call back function, to be used in
         //it to know which element had been called and it's id
@@ -133,7 +130,7 @@ function checkInput(targetId) {
     // show correct sign
     const parent = document.getElementById("imgContainer");
     const img = document.createElement("img");
-    img.src = "./../img/tick.jpg";
+    img.src = "https://as1.ftcdn.net/v2/jpg/00/08/06/22/1000_F_8062235_95r1VLi5D4a2V5UvzxtBUIb44oHSqsPq.jpg";
     img.style.padding = "15px";
     parent.appendChild(img);
     //show the next random x & y to instruct player
@@ -142,7 +139,7 @@ function checkInput(targetId) {
     //if it is not correct, show not correct sign, show the next random x & y to instruct player
     const parent = document.getElementById("imgContainer");
     const img = document.createElement("img");
-    img.src = "./../img/cross.jpg";
+    img.src = "https://as2.ftcdn.net/v2/jpg/03/76/40/93/1000_F_376409393_AplVbY9EcXNCQz6LPilH8RbScpeG8Cp9.jpg";
     img.style.padding = "15px";
     parent.appendChild(img);
     //show the next random x & y to instruct player
